@@ -2,20 +2,57 @@ cmake_minimum_required(VERSION 3.10)
 
 #set project name
 project(Crypt LANGUAGES C CXX)
-set(SOURCE_FILES ${PROJECT_SOURCE_DIR}/source)
+set(SOURCE_FILES ${PROJECT_SOURCE_DIR}/source/encrypt.cpp ${PROJECT_SOURCE_DIR}/source/decrypt.cpp)
 set(INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/include)
 
 add_executable(exe ${SOURCE_FILES})
 
-message()
-message()
+message(STATUS "CMAKE_C_COMPILER = ${CMAKE_C_COMPILER}")
+message(STATUS "CMAKE_CXX_COMPILER = ${CMAKE_CXX_COMPILER}")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pthread")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 
-message("*** MPI ***")
+#message("*** MPI ***")
+
 if(NOT MPI_DISABLE)
 	find_package(MPI)
-if(MPI_C_FOUND OR MPI_CXX_FOUND)
-	message()
-	
-	#compile with MPI if found
+if(MPI_C_FOUND or MPI_CXX_FOUND)
+	message(STATUS "MPI_C_FOUND = ${MPI_C_FOUND}")
+	message(STATUS "MPI_C_INCLUDE_PATH = ${MPI_C_INCLUDE_PATH}")
+	message(STATUS "MPI_C_LIBRARIES = ${MPI_C_LIBRARIES}")
+	message(STATUS "MPI_C_COMPILE_FLAGS = ${MPI_C_COMPILE_FLAGS}")
+	message(STATUS "MPI_CXX_FOUND = ${MPI_CXX_FOUND}")
+        message(STATUS "MPI_CXX_INCLUDE_PATH = ${MPI_CXX_INCLUDE_PATH}")
+        message(STATUS "MPI_CXX_LIBRARIES = ${MPI_CXX_LIBRARIES}")
+        message(STATUS "MPI_CXX_COMPILE_FLAGS = ${MPI_CXX_COMPILE_FLAGS}")
+
+	#Compile with MPI if found
 	if(MPI_C_FOUND)
-		set(CMAKE_C_FLAGS "${}")
+		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${MPI_C_COMPILE_FLAGS}")
+		set(INCLUDE_DIRS ${GDP_INCLUDE_DIRS} ${MPI_C_INCLUDE_PATH})
+		set(MPI_LIBRARIES ${MPI_LIBRARIES} ${MPI_C_LIBRARIES})
+	endif(MPI_C_FOUND)
+
+	if(MPI_CXX_FOUND)
+                set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${MPI_CXX_COMPILE_FLAGS}")
+                set(INCLUDE_DIRS ${GDP_INCLUDE_DIRS} ${MPI_CXX_INCLUDE_PATH})
+                set(MPI_LIBRARIES ${MPI_LIBRARIES} ${MPI_CXX_LIBRARIES})
+        endif(MPI_CXX_FOUND)
+
+	else(MPI_C_FOUND OR MPI_CXX_FOUND)
+		message(STATUS "${RED}MPI Not Found${ColourReset}")
+endif(MPI_C_FOUND or MPI_CXX_FOUND)
+endif(NOT MPI_DISABLE)
+
+
+target_link_libraries(
+	exe
+	${MPI_LIBRARIES}
+)
+
+set_target_properties(
+	exe
+	PROPERTIES
+	INCLUDE_DIRECTORIES "${INCLUDE_DIRS}"
+	RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin"
+)
