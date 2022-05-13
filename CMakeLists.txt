@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 #set project name
 project(Crypt LANGUAGES C CXX)
-set(SOURCE_FILES ${PROJECT_SOURCE_DIR}/source/encrypt.cpp ${PROJECT_SOURCE_DIR}/source/decrypt.cpp)
+set(SOURCE_FILES ${PROJECT_SOURCE_DIR}/source/MPI_decrypt.cpp)
 set(INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/include)
 
 add_executable(exe ${SOURCE_FILES})
@@ -16,7 +16,6 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 
 if(NOT MPI_DISABLE)
 	find_package(MPI)
-if(MPI_C_FOUND or MPI_CXX_FOUND)
 	message(STATUS "MPI_C_FOUND = ${MPI_C_FOUND}")
 	message(STATUS "MPI_C_INCLUDE_PATH = ${MPI_C_INCLUDE_PATH}")
 	message(STATUS "MPI_C_LIBRARIES = ${MPI_C_LIBRARIES}")
@@ -41,7 +40,6 @@ if(MPI_C_FOUND or MPI_CXX_FOUND)
 
 	else(MPI_C_FOUND OR MPI_CXX_FOUND)
 		message(STATUS "${RED}MPI Not Found${ColourReset}")
-endif(MPI_C_FOUND or MPI_CXX_FOUND)
 endif(NOT MPI_DISABLE)
 
 

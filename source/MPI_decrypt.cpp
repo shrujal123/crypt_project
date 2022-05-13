@@ -4,21 +4,25 @@
 #include<functional>
 #include<mpi.h>
 
-void cipher(int rank, int )
+using namespace std;
+
+const int NUM_KEYS = 10;
+const string SECRET_MESSAGE = "secret message";
+const string ENCRYPTED_MESSAGE = "Xjhwjy%Rjxxflj";
+
+bool cipher(int key)
 {
-	for(int j = threadnum; j < 10; j +=3)
+	string decrypt;
+	for(int i = 0; i < SECRET_MESSAGE.size(); i++)
         {
-                for(int i = 0; i < encrypted.size(); i++)
+		int temp = (ENCRYPTED_MESSAGE[i] - key);
+		decrypt[i] = char(temp);
+                if (decrypt.compare(SECRET_MESSAGE)==0)
                 {
-                        int temp = (encrypted[i] - j);
-                        decrypt[i] = char(temp);
+                        return true;
                 }
-                if (decrypt.compare(message)==0)
-                {
-                        key = j;
-                        break;
-                }
-        }
+	}
+	return false;
 }
 
 int main()
@@ -38,18 +42,50 @@ int main()
                 MPI_Abort(MPI_COMM_WORLD, 1);
         }
 
+	int j;
+	MPI_Request request;
 	if(world_rank == 0) //master
 	{
+
 		for(int i = 1; i <= world_size; i++)
 		{
-			MPI_Send() //send keys to slave nodes
+
+			for(j = 0; j < NUM_KEYS; j++)
+			{
+
+				MPI_Irecv(&world_rank, 1, MPI_INT, MPI_ANY_SOURCE, 0, MPI_COMM_WORLD, &request);
+				if(world_rank == -1)
+				{
+					for(int k = 1; k <= world_size; k++)
+					{
+						MPI_Send(&world_rank, 1, MPI_INT, k, 0, MPI_COMM_WORLD);
+					}
+					break;
+				}
+				MPI_Send(&j, 1, MPI_INT, world_rank, 1, MPI_COMM_WORLD); //send keys to slave nodes
+			}
+
 		}
 	}
 
 	else //slave	
 	{
-		
-		MPI_Recv()
+		while(1)
+		{
+			MPI_Send(&world_rank, 1, MPI_INT, 0, 0, MPI_COMM_WORLD);
+			if(world_rank < 0)
+			{
+				break;
+			}
+			MPI_Irecv(&j, 1, MPI_INT, 0, 1, MPI_COMM_WORLD, &request);
+			if(cipher(j))
+			{
+				world_rank = -1;
+			}
+		}
 	}
+
+	MPI_Finalize();
+	return 0;
 
 }

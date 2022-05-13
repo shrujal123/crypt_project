@@ -29,7 +29,7 @@ void cipher(int threadnum, stringstream &file, string encrypted, string message,
 	
 }
 
-int main()
+int decrypt()
 {
 
 string encrypted = "Xjhwjy%Rjxxflj";
