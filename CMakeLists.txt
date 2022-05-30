@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.10)
 #set project name
 project(Crypt LANGUAGES C CXX)
 set(SOURCE_FILES ${PROJECT_SOURCE_DIR}/source/MPI_decrypt.cpp)
+#set(SOURCE_FILES ${PROJECT_SOURCE_DIR}/source/encrypt.cpp ${PROJECT_SOURCE_DIR}/source/decrypt.cpp)
 set(INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/include)
 
 add_executable(exe ${SOURCE_FILES})
