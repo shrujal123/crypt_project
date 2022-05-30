@@ -1,0 +1,62 @@
+Secret Message8
+
+real	0m0.018s
+user	0m0.006s
+sys	0m0.000s
+Secret Message8
+
+real	0m0.016s
+user	0m0.006s
+sys	0m0.000s
+Secret Message8
+
+real	0m0.012s
+user	0m0.003s
+sys	0m0.000s
+Secret Message8
+
+real	0m0.016s
+user	0m0.006s
+sys	0m0.000s
+key: key: key: 
+real	0m8.193s
+user	0m0.008s
+sys	0m0.000s
+key: 
+real	0m7.554s
+user	0m0.007s
+sys	0m0.000s
+key: 
+real	0m4.451s
+user	0m0.006s
+sys	0m0.000s
+
+real	0m0.015s
+user	0m0.006s
+sys	0m0.000s
+
+real	0m0.014s
+user	0m0.003s
+sys	0m0.000s
+
+real	0m0.024s
+user	0m0.001s
+sys	0m0.007s
+num processors must be two
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 0
+[unset]: write_line error; fd=-1 buf=:cmd=abort exitcode=1
+:
+system msg for write_line failure : Bad file descriptor
+
+real	0m0.020s
+user	0m0.000s
+sys	0m0.008s
+num processors must be greater than two
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 0
+[unset]: write_line error; fd=-1 buf=:cmd=abort exitcode=1
+:
+system msg for write_line failure : Bad file descriptor
+
+real	0m0.014s
+user	0m0.000s
+sys	0m0.008s

@@ -32,7 +32,7 @@ void cipher(int threadnum, stringstream &file, string encrypted, string message,
 int decrypt()
 {
 
-string encrypted = "Xjhwjy%Rjxxflj";
+string encrypted = "[mkzm|(Um{{iom";
 string message = "Secret Message";
 string decrypt;
 int key;
@@ -55,7 +55,7 @@ for(int i = 0; i < decrypt.size(); i++)
 	int temp = (encrypted[i] - key);
 	decrypt[i] = char(temp);
 }
-cout << decrypt << endl;
+cout << decrypt << key << endl;
 
 return 0;
 }

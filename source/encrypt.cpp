@@ -1,16 +1,25 @@
 #include<iostream>
 #include<fstream>
+#include<sstream>
 using namespace std;
 
-int main()
+int main(int argc, char** argv)
 {
 	int key;
 	string file = "text.txt";
 	char c;
 
-	cout << "key: ";
-	cin >> key;
-
+	if(argc == 1)
+	{
+		cout << "key: ";
+		cin >> key;
+	}
+	else
+	{
+		stringstream s;
+		s << argv[1];
+		s >> key;
+	}
 	fstream fin,fout;
 
 	fin.open(file, fstream::in);
