@@ -1,9 +1,4 @@
-while getopts 'n:' flag;
-do
-	case "$flag" in
-		n)
-			num_processors = "$OPTARG";;
-	esac
-done
+module load cmake/3.19.5 mpich/3.4 gcc/7.5.0
 
-(time mpirun ($num_processors ./exe)) &>> benchmark_file;
+echo $1
+(time mpirun -n $1 ./exe) &>> benchmark_file;
